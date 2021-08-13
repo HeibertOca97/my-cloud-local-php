@@ -1,0 +1,15 @@
+:root {
+  --cl-p1: #fff;
+  --cl-s1: rgb(58, 58, 58);
+  --bg-p: rgb(21, 29, 102);
+  --bg-sh: rgba(204, 204, 204, 0.404);
+}
+
+@mixin Button($cl, $bg) {
+  width: 98%;
+  margin: auto;
+  display: block;
+  background-color: $bg;
+  color: $cl;
+  border: none;
+}
