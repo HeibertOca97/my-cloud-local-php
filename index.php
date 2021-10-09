@@ -1,3 +1,6 @@
 <?php
+require_once "./config/glob.php";
+require_once "./config/Autoload.php";
 
-include "./layouts/app.php";
+config\Autoload::run();
+new core\Routing();
