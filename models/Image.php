@@ -4,7 +4,7 @@ use core\ModelBase;
 
 class Image extends ModelBase{
     private $table = "images";
-    private $db, $url;
+    private $db, $id, $url;
 
     public function __construct(){
         parent::__construct($this->table);
@@ -27,4 +27,6 @@ class Image extends ModelBase{
         $sql = "INSERT INTO images(url) VALUES('{$this->url}')";
         $this->db->query($sql);
     }
+
+    
 }

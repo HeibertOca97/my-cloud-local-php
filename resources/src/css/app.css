@@ -18,19 +18,58 @@ body {
 
 /*** HEADER ***/
 
-header {
+.header {
     color: var(--cl-p1);
     box-shadow: 0px 5px 10px var(--bg-sh);
     background-color: var(--bg-p);
 }
 
-header>div {
+.header>div {
     padding: 10px 5px;
     box-sizing: border-box;
 }
 
-header>div h1 {
+.header>div .logo-title {
     font-family: "Style Script", cursive;
+    font-weight: 900;
+    font-size: 28px;
+    text-decoration: none;
+    color: var(--cl-p1);
+}
+
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar>nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.link-nav {
+    text-decoration: none;
+    display: block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    color: var(--cl-p1);
+    transition: all 250ms;
+}
+
+.link-nav:hover {
+    color: var(--cl-p1);
+    background-color: #090f44;
+}
+
+.link-active {
+    color: var(--bg-p);
+    background-color: #ffffffa2;
 }
 
 /*** SECTION ***/
@@ -56,14 +95,17 @@ section, footer {
 
 /*** FOOTER ***/
 
-footer {
+.footer {
     box-shadow: 0px -5px 10px var(--bg-sh);
+    text-align: center;
 }
 
-footer p {
-    padding: 10px 5px;
-    box-sizing: border-box;
+.footer p {
+    line-height: 4em;
+    padding: 0 10px;
 }
+
+/*** FORMULARIO IMAGENES ***/
 
 .box-form {
     padding: 10px 5px;
@@ -78,71 +120,35 @@ footer p {
     margin: 10px auto;
 }
 
-.box-form .btn-w1 {
+.box-form .btn-w1, .box-form .btn-w2, .box-form .btn-w3 {
     width: 98%;
     margin: auto;
     display: block;
-    background-color: rgba(165, 191, 230, 0.233);
-    color: black;
     border: none;
     text-align: center;
-    line-height: 2em;
+    cursor: pointer;
+}
+
+.box-form .btn-w1 {
+    background-color: rgba(165, 191, 230, 0.233);
+    color: black;
+    line-height: 2.2em;
 }
 
 .box-form .btn-w2 {
-    width: 98%;
-    margin: auto;
-    display: block;
     background-color: #1c42aa;
     color: white;
-    border: none;
     line-height: 3em;
     text-transform: uppercase;
     font-weight: 900;
 }
 
 .box-form .btn-w3 {
-    width: 98%;
-    margin: auto;
-    display: block;
     background-color: #aa1c1c;
     color: white;
-    border: none;
     line-height: 3em;
     text-transform: uppercase;
     font-weight: 900;
-}
-
-.box-picture h3 {
-    margin: 10px;
-}
-
-.box-picture .box-list-file {
-    padding: 2px;
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 5px;
-    grid-row-gap: 5px;
-}
-
-@media (min-width: 768px) {
-    .box-picture .box-list-file {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-}
-
-.box-picture picture {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.box-picture picture img {
-    transform: scale(0.8);
-    width: 100%;
-    height: 100%;
-    display: block;
 }
 
 .box-img {
@@ -153,10 +159,143 @@ footer p {
 
 .box-img p {
     margin: 10px auto;
+    overflow: hidden;
 }
 
 .box-img>img {
     display: block;
     width: 98%;
     margin: auto;
+}
+
+/** SECCION DE IMAGENES**/
+
+.box-picture h3 {
+    margin: 10px;
+}
+
+.box-picture .msg-register {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.box-picture .box-list-file {
+    padding: 5px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+}
+
+@media (min-width: 768px) {
+    .box-picture .box-list-file {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.box-picture picture {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 250px;
+    max-height: 250px;
+    position: relative;
+    cursor: pointer;
+}
+
+.box-picture picture:hover>img {
+    filter: blur(5px);
+    transform: scale(2);
+}
+
+.box-picture picture>img {
+    transform: scale(0.8);
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: all 200ms;
+}
+
+.box-picture picture:hover>.control-img {
+    transform: scale(1);
+}
+
+.control-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(97, 97, 97, 0.11);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0);
+    transition: all 200ms;
+}
+
+.control-img .btn-control {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.596);
+    border-radius: 8%;
+    text-align: center;
+    font-size: 20px;
+    padding: 8px;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+.control-img button {
+    border: none;
+    cursor: pointer;
+}
+
+/************
+COMPONENTES
+**********/
+
+/****** selectOption *****/
+
+.card {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    margin: 50px 0;
+}
+
+.card-option {
+    text-decoration: none;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.144);
+    width: 98%;
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    color: #090f44;
+    transition: all 250ms;
+}
+
+.card-option:hover {
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.37);
+}
+
+.card-option i {
+    display: block;
+    line-height: 2em;
+    font-size: 75px;
+}
+
+.card-option .card-title {
+    line-height: 3em;
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .card {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

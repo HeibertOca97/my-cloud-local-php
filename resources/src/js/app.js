@@ -3,7 +3,8 @@
 const form_img = document.querySelector("#form-img"),
 file_image = document.querySelector("input[name=image]"),
 status_img = document.querySelector("#status-file"),
-btn_cancel =document.getElementById("btn-cancel");
+btn_cancel =document.getElementById("btn-cancel"),
+btn_select =document.getElementById("btn-select");
 
 const img_src = document.querySelector("#box-img"),
     txt_name =document.getElementsByClassName("name")[0],
@@ -35,10 +36,10 @@ function messageState($obj){
 }
 
 if(form_img){
-    form_img.addEventListener('submit', sendImageFile);
+    form_img.addEventListener('submit', saveImageFile);
 }
 
-function sendImageFile(e){
+function saveImageFile(e){
     e.preventDefault();
     if(file_image.value){
         e.target.submit();
@@ -58,12 +59,13 @@ if(file_image){
 function getImage(e){    
     const fileObj = e.target.files[0];
     const file = e.target;
-    const img_exp = /\.(jpg|png|gif)$/i;
+    const img_exp = /\.(jpg|png|gif|jpeg)$/i;
     const {name, type} = fileObj;
     const _name = name.split('.')[0];
     
     
     if(img_exp.test(name)){
+        btn_select.style.display = "none";
         btn_cancel.style.display = "block";
 
         const url_tmp = URL.createObjectURL(fileObj);
@@ -77,6 +79,7 @@ function getImage(e){
             message: "Imagen lista para guardar"
         });
     }else{
+        btn_select.style.display = "block";
         btn_cancel.style.display = "none";
 
         img_src.setAttribute("src", "");
@@ -90,4 +93,19 @@ function getImage(e){
         });
     }
    
+}
+
+let btn_delete_img = document.getElementsByClassName("delete-img");
+for (let index = 0; index < btn_delete_img.length; index++) {
+    const form_delete = btn_delete_img[index];
+    deleteImageFile(form_delete);
+}
+
+function deleteImageFile(form){
+    form.addEventListener("submit", e => {
+        e.preventDefault();
+        if(window.confirm("Esta seguro de eliminar esta imagen?")){
+            e.target.submit();
+        }
+    })
 }

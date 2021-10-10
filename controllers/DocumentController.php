@@ -2,12 +2,12 @@
 
 use core\Controller;
 
-class HomeController extends Controller {
+class DocumentController extends Controller {
 
     public function index(){
         self::isGET();
 
-        $this->view('views.home');
+        $this->view('views.document');
     }
 
 }

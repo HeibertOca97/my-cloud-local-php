@@ -6,6 +6,7 @@ class Controller extends Request{
     private $data;
 
     public function __construct(){
+        parent::__construct();
         $this->data = [];
     }
 

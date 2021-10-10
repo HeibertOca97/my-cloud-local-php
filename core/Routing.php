@@ -8,7 +8,7 @@ class Routing{
         $this->run();
     }
 
-    public function run(){
+    private function run(){
         if(isset($_GET['url'])){
             $this->url = $_GET['url'];
         }
@@ -35,12 +35,11 @@ class Routing{
             $this->action = ACTION_DEFAULT;
         }
 
-        $controllerObj = $this->launchController($this->controller); 
+        $controllerObj = $this->launchController($this->controller);
         $this->launchAction($controllerObj);
-
     }
 
-    public function launchController($controller){
+    private function launchController($controller){
         $controller = ucwords($controller) . "Controller";
         $strFileController = "./controllers/" . $controller . ".php";
         
@@ -55,37 +54,41 @@ class Routing{
             $controllerObj = new $controller;
 
         } catch (\Throwable $th) {
-            $controller = "ErrorController";
-            $strFileController = "./controllers/" . $controller . ".php";
-            require_once $strFileController;
-            $controller = "controllers\\".$controller;
-            $controllerObj = new $controller;
-
+            $controllerObj = $this->getControllerError();
         }finally{
             return $controllerObj;
         }
         
     }
 
-    public function loadView($controllerObj, $action){
-        $accion = $action;
-        $controllerObj->$accion();
-    }
-
-    public function launchAction($controllerObj){
+    private function launchAction($controllerObj){
         if(isset($this->action) && method_exists($controllerObj, $this->action)){
             $this->loadView($controllerObj, $this->action);
         }else{
+            $controllerObj = $this->getControllerError();
             $this->loadView($controllerObj, ACTION_DEFAULT);
         }
     }
 
-    public function validatedParams($controllerObj, $paramObj){
-        if(isset($paramObj)){
-            call_user_func_array(array($controllerObj, $this->action), $paramObj);
+    private function loadView($controllerObj, $action){
+        if(isset($this->params)){
+            call_user_func_array(array($controllerObj, $action), $this->params);
         }else{
-           call_user_func(array($controllerObj, $this->action));
+            call_user_func(array($controllerObj, $action));
         }
+
+
+    }
+
+    private function getControllerError(){
+        $controller = "ErrorController";
+        $strFileController = "./controllers/" . $controller . ".php";
+
+        require_once $strFileController;
+        $controller = "controllers\\".$controller;
+        $controllerObj = new $controller;
+
+        return $controllerObj;
     }
     
 }

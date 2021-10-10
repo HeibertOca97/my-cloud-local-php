@@ -1,8 +1,9 @@
 <?php namespace core;
 
-
-class HelpView{
+use core\HelpRoute;
+class HelpView extends HelpRoute{
     private $path;
+
     public function assets($dir){
         $strPathUrl = URL . "resources/" . $dir; 
         print $strPathUrl;
@@ -48,6 +49,14 @@ class HelpView{
         }
 
         move_uploaded_file($tmp_name, $route_file);
+    }
+
+    public function deleteFile($path){
+        unlink($path);
+    }
+
+    public function request($route){
+        
     }
 
     

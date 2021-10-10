@@ -25,4 +25,15 @@ class ModelBase{
 
         return $resultSet;
     }
+
+    public function getBy($id){
+        $query = $this->db->query("SELECT * FROM {$this->table} WHERE id = {$id} LIMIT 1");
+        
+        return $query->fetch_object();
+    }
+
+    public function delete($id){
+        $sql = "DELETE FROM {$this->table} WHERE id = {$id}";
+        $this->db->query($sql);
+    }
 }
