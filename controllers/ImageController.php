@@ -1,58 +1,93 @@
-<?php namespace controllers;
+<?php
+
+namespace controllers;
 
 use core\Controller;
 use core\Logger;
-use models\Image;
+use models\Archivo;
+use models\Paginator;
 
-class ImageController extends Controller {
+class ImageController extends Controller
+{
 
-    public function index(){
+    public function index()
+    {
         self::isGET();
-
-        $img = new Image();
+        $file = new Paginator("archivos", 6);
+        $file->_set('type_id', 1);
 
         $this->view('views.image', [
-            "images" => $img->getAll(),
+            "images" => $file->getPaginator(),
+            "totalPage" => $file->getTotal(),
+            "limitPage" => $file->_get('limit'),
+            "pagLink" => $file->getLinks(),
+            "paginate" => true
         ]);
     }
 
-    public function store(){
+    public function pag($pag)
+    {
+        self::isGET();
+        if (!is_numeric($pag)) $this->redirect("image");
+
+        $file = new Paginator("archivos", 6);
+        $file->_set('type_id', 1);
+        $total = $file->getTotal();
+        $limit = $file->_get('limit');
+
+        if ($total <= $limit) $this->redirect("image");
+
+        if ($pag != null) {
+            $file->_set('page', $pag);
+        }
+
+        $this->view('views.image', [
+            "images" => $file->getPaginator(),
+            "totalPage" => $total,
+            "limitPage" => $limit,
+            "pagLink" => $file->getLinks(),
+            "pagActual" => $pag,
+            "paginate" => false
+        ]);
+    }
+
+    public function store()
+    {
         self::isPOST();
 
         try {
             $req = $this->inputFile("image");
-            var_dump($req);
             $new_name = date("is") . $req->name;
             $route_file = $this->setStorage("image", $new_name);
             $this->uploadFile($req->tmp_name, $route_file);
 
-            $img = new Image();
+            $img = new Archivo();
             $img->_set('url', $route_file);
+            $img->_set('type_id', 1);
             $img->save();
 
             Logger::info("Imagen almacenada con exito - " . $new_name);
         } catch (\Throwable $th) {
-            Logger::error("HomeController::store - " . $th);
+            Logger::error("ImagenController::store - " . $th);
         }
 
         $this->redirect("image");
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         self::isPOST();
-        
+
         try {
-            $img = new Image();
+            $img = new Archivo();
             $data = $img->getBy($id);
 
             $this->deleteFile($data->url);
             $img->delete($data->id);
-
         } catch (\Throwable $th) {
-            Logger::error("HomeController::store - " . $th);
+            Logger::error("ImagenController::destroy - " . $th);
         }
-        
+
         $this->redirect("image");
     }
-
 }

@@ -2,9 +2,9 @@
 
 use core\ModelBase;
 
-class Image extends ModelBase{
-    private $table = "images";
-    private $db, $id, $url;
+class Archivo extends ModelBase{
+    private $table = "Archivos";
+    private $db, $url, $id, $type_id;
 
     public function __construct(){
         parent::__construct($this->table);
@@ -24,8 +24,19 @@ class Image extends ModelBase{
     }
 
     public function save(){
-        $sql = "INSERT INTO images(url) VALUES('{$this->url}')";
+        $sql = "INSERT INTO {$this->table}(url, type_id) VALUES('{$this->url}', {$this->type_id})";
         $this->db->query($sql);
+    }
+
+    public function getAll(){
+        $query = $this->db->query("SELECT * FROM {$this->table} WHERE type_id = {$this->type_id} ORDER BY id DESC");
+        $resultSet = [];
+
+        while ($row = $query->fetch_object()) {
+            $resultSet[] = $row;
+        }
+
+        return $resultSet;
     }
 
     
