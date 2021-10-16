@@ -16,7 +16,7 @@ class Controller extends Request{
             ${$id_data} = $value;
         }
 
-        include PATH.'resources/' . $view . '.php';
+        require_once $this->content($view);
     }
 
     public function view($view, $data = []){
@@ -26,7 +26,7 @@ class Controller extends Request{
             ${$id_data} = $value;
         }
 
-        require_once './resources/' . $view . '.php';
+        require_once $this->content($view);
     }
 
     public function redirect($url = null){

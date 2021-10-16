@@ -9,12 +9,13 @@ use models\Paginator;
 
 class ImageController extends Controller
 {
+    private $type_file = 1;
 
     public function index()
     {
         self::isGET();
         $file = new Paginator("archivos", 6);
-        $file->_set('type_id', 1);
+        $file->_set('type_id', $this->type_file);
 
         $this->view('views.image', [
             "images" => $file->getPaginator(),
@@ -31,7 +32,7 @@ class ImageController extends Controller
         if (!is_numeric($pag)) $this->redirect("image");
 
         $file = new Paginator("archivos", 6);
-        $file->_set('type_id', 1);
+        $file->_set('type_id', $this->type_file);
         $total = $file->getTotal();
         $limit = $file->_get('limit');
 
@@ -63,7 +64,7 @@ class ImageController extends Controller
 
             $img = new Archivo();
             $img->_set('url', $route_file);
-            $img->_set('type_id', 1);
+            $img->_set('type_id', $this->type_file);
             $img->save();
 
             Logger::info("Imagen almacenada con exito - " . $new_name);

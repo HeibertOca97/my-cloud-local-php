@@ -9,14 +9,13 @@ use models\Paginator;
 
 class VideoController extends Controller
 {
+    private $type_file = 2;
 
     public function index()
     {
         self::isGET();
-
-        self::isGET();
         $file = new Paginator("archivos", 6);
-        $file->_set('type_id', 2);
+        $file->_set('type_id', $this->type_file);
 
         $this->view('views.video', [
             "videos" => $file->getPaginator(),
@@ -30,14 +29,14 @@ class VideoController extends Controller
     public function pag($pag)
     {
         self::isGET();
-        if (!is_numeric($pag)) $this->redirect("image");
+        if (!is_numeric($pag)) $this->redirect("video");
 
         $file = new Paginator("archivos", 6);
-        $file->_set('type_id', 2);
+        $file->_set('type_id', $this->type_file);
         $total = $file->getTotal();
         $limit = $file->_get('limit');
 
-        if ($total <= $limit) $this->redirect("image");
+        if ($total <= $limit) $this->redirect("video");
 
         if ($pag != null) {
             $file->_set('page', $pag);
@@ -65,10 +64,10 @@ class VideoController extends Controller
 
             $img = new Archivo();
             $img->_set('url', $route_file);
-            $img->_set('type_id', 2);
+            $img->_set('type_id', $this->type_file);
             $img->save();
 
-            Logger::info("Video almacenada con exito - " . $new_name);
+            Logger::info("Video almacenado con exito - " . $new_name);
         } catch (\Throwable $th) {
             Logger::error("VideoController::store - " . $th);
         }

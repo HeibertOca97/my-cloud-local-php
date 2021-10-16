@@ -1,12 +1,12 @@
 "use strict";
 
-const form_video = document.querySelector("#form-img"),
-file_image = document.querySelector("input[name=video]"),
+const form_img = document.querySelector("#form-img"),
+file_image = document.querySelector("input[name=image]"),
 status_img = document.querySelector("#status-file"),
 btn_cancel =document.getElementById("btn-cancel"),
 btn_select =document.getElementById("btn-select");
 
-const video_src = document.querySelector("#box-video"),
+const img_src = document.querySelector("#box-img"),
     txt_name =document.getElementsByClassName("name")[0],
     txt_type =document.getElementsByClassName("type")[0];
 
@@ -15,13 +15,10 @@ if(btn_cancel){
     btn_cancel.addEventListener("click", clearValueInputFile);
 }
 
-video_src.parentElement.style.display = "none";
-
 function clearValueInputFile(){
+    btn_select.style.display = "block";
     btn_cancel.style.display = "none";
-    video_src.parentElement.style.display = "none";
-    video_src.setAttribute("src", "");
-    video_src.setAttribute("type", "");
+    img_src.setAttribute("src", "");
     file_image.value = "";
     txt_name.innerHTML = "";
     txt_type.innerHTML = "";
@@ -39,8 +36,8 @@ function messageState($obj){
     status_img.innerHTML = message;
 }
 
-if(form_video){
-    form_video.addEventListener('submit', saveImageFile);
+if(form_img){
+    form_img.addEventListener('submit', saveImageFile);
 }
 
 function saveImageFile(e){
@@ -57,13 +54,13 @@ function saveImageFile(e){
 }
 
 if(file_image){
-    file_image.addEventListener('change', getImage);
+    file_image.addEventListener('change', validatedFileTypeImage);
 }
 
-function getImage(e){    
+function validatedFileTypeImage(e){    
     const fileObj = e.target.files[0];
     const file = e.target;
-    const img_exp = /\.(mp4|flv|avi|wmv)$/i;
+    const img_exp = /\.(jpg|png|gif|jpeg)$/i;
     const {name, type} = fileObj;
     const _name = name.split('.')[0];
     
@@ -72,24 +69,21 @@ function getImage(e){
         btn_select.style.display = "none";
         btn_cancel.style.display = "block";
 
-        video_src.parentElement.style.display = "block";
         const url_tmp = URL.createObjectURL(fileObj);
-        video_src.setAttribute("src", url_tmp);
-        video_src.setAttribute("type", type);
+        img_src.setAttribute("src", url_tmp);
 
         txt_name.innerHTML = "<strong>Nombre:</strong> " + _name;
         txt_type.innerHTML = "<strong>Tipo:</strong> " + type;
         messageState({
             color: "green",
             margin: "20px",
-            message: "Video lista para guardar"
+            message: "Imagen lista para guardar"
         });
     }else{
         btn_select.style.display = "block";
         btn_cancel.style.display = "none";
-        video_src.parentElement.style.display = "none";
-        video_src.setAttribute("src", "");
-        video_src.setAttribute("type", "");
+
+        img_src.setAttribute("src", "");
         file.value="";
         txt_name.innerHTML = "";
         txt_type.innerHTML = "";
@@ -102,16 +96,16 @@ function getImage(e){
    
 }
 
-let btn_delete_video = document.getElementsByClassName("delete-video");
-for (let index = 0; index < btn_delete_video.length; index++) {
-    const form_delete = btn_delete_video[index];
+let btn_delete_img = document.getElementsByClassName("delete-img");
+for (let index = 0; index < btn_delete_img.length; index++) {
+    const form_delete = btn_delete_img[index];
     deleteImageFile(form_delete);
 }
 
 function deleteImageFile(form){
     form.addEventListener("submit", e => {
         e.preventDefault();
-        if(window.confirm("Esta seguro de eliminar este video?")){
+        if(window.confirm("Esta seguro de eliminar esta imagen?")){
             e.target.submit();
         }
     })

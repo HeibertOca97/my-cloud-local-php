@@ -2,8 +2,8 @@
 define("CONTROLLER_DEFAULT", "Home");
 define("ACTION_DEFAULT", "index");
 define("APP", "Cloud Local");
-define('URL', "http://localhost/www/frontend/app-savefile-php/");
-define('PATH', $_SERVER['DOCUMENT_ROOT'] . "/www/frontend/app-savefile-php/");
+define('URL', "http://localhost/www/frontend/app-cloudlocal/");
+define('PATH', $_SERVER['DOCUMENT_ROOT'] . "/www/frontend/app-cloudlocal/");
 
 error_reporting(E_ALL);
 

@@ -1,6 +1,9 @@
 <?php
-require_once "./config/glob.php";
-require_once "./config/Autoload.php";
 
-config\Autoload::run();
-new core\Routing();
+$appRoute = "./public/index.php";
+
+if(file_exists($appRoute)){
+    require_once $appRoute;
+}else{
+    print "<p>Problema al encontrar su directorio <strong>public/</strong> revice su archivo <strong>index.php</strong></p>";
+}

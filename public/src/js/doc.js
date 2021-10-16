@@ -1,12 +1,12 @@
 "use strict";
 
-const form_img = document.querySelector("#form-img"),
-file_image = document.querySelector("input[name=image]"),
-status_img = document.querySelector("#status-file"),
+const form_doc = document.querySelector("#form-doc"),
+file_doc = document.querySelector("input[name=document]"),
+status_doc = document.querySelector("#status-file"),
 btn_cancel =document.getElementById("btn-cancel"),
 btn_select =document.getElementById("btn-select");
 
-const img_src = document.querySelector("#box-img"),
+const doc_src = document.querySelector("#box-doc"),
     txt_name =document.getElementsByClassName("name")[0],
     txt_type =document.getElementsByClassName("type")[0];
 
@@ -15,10 +15,14 @@ if(btn_cancel){
     btn_cancel.addEventListener("click", clearValueInputFile);
 }
 
+doc_src.style.display = "none";
+
 function clearValueInputFile(){
+    btn_select.style.display = "block";
     btn_cancel.style.display = "none";
-    img_src.setAttribute("src", "");
-    file_image.value = "";
+    doc_src.style.display = "none";
+    doc_src.setAttribute("src", "");
+    file_doc.value = "";
     txt_name.innerHTML = "";
     txt_type.innerHTML = "";
     messageState({
@@ -30,36 +34,36 @@ function clearValueInputFile(){
 
 function messageState($obj){
     const {color, margin, message} = $obj;
-    status_img.style.color = color;
-    status_img.style.margin = margin;
-    status_img.innerHTML = message;
+    status_doc.style.color = color;
+    status_doc.style.margin = margin;
+    status_doc.innerHTML = message;
 }
 
-if(form_img){
-    form_img.addEventListener('submit', saveImageFile);
+if(form_doc){
+    form_doc.addEventListener('submit', saveDocumentFile);
 }
 
-function saveImageFile(e){
+function saveDocumentFile(e){
     e.preventDefault();
-    if(file_image.value){
+    if(file_doc.value){
         e.target.submit();
     }else{
         messageState({
             color: "red",
             margin: "20px",
-            message: "Debe escoger una imagen para poder guardarla"
+            message: "Debe escoger un documento para poder guardarlo"
         });
     }
 }
 
-if(file_image){
-    file_image.addEventListener('change', getImage);
+if(file_doc){
+    file_doc.addEventListener('change', validatedFileTypeDocument);
 }
 
-function getImage(e){    
+function validatedFileTypeDocument(e){    
     const fileObj = e.target.files[0];
     const file = e.target;
-    const img_exp = /\.(jpg|png|gif|jpeg)$/i;
+    const img_exp = /\.(pdf)$/i;
     const {name, type} = fileObj;
     const _name = name.split('.')[0];
     
@@ -68,43 +72,44 @@ function getImage(e){
         btn_select.style.display = "none";
         btn_cancel.style.display = "block";
 
+        doc_src.style.display = "block";
         const url_tmp = URL.createObjectURL(fileObj);
-        img_src.setAttribute("src", url_tmp);
+        doc_src.setAttribute("src", url_tmp);
 
         txt_name.innerHTML = "<strong>Nombre:</strong> " + _name;
         txt_type.innerHTML = "<strong>Tipo:</strong> " + type;
         messageState({
             color: "green",
             margin: "20px",
-            message: "Imagen lista para guardar"
+            message: "Documento listo para guardar"
         });
     }else{
         btn_select.style.display = "block";
         btn_cancel.style.display = "none";
-
-        img_src.setAttribute("src", "");
+        doc_src.style.display = "none";
+        doc_src.setAttribute("src", "");
         file.value="";
         txt_name.innerHTML = "";
         txt_type.innerHTML = "";
         messageState({
             color: "red",
             margin: "20px",
-            message: "Lo que ha intentando escoger no es una imagen"
+            message: "Lo que ha intentando escoger no es un documento"
         });
     }
    
 }
 
-let btn_delete_img = document.getElementsByClassName("delete-img");
-for (let index = 0; index < btn_delete_img.length; index++) {
-    const form_delete = btn_delete_img[index];
-    deleteImageFile(form_delete);
+let btn_delete_doc = document.getElementsByClassName("delete-doc");
+for (let index = 0; index < btn_delete_doc.length; index++) {
+    const form_delete = btn_delete_doc[index];
+    deleteDocumentFile(form_delete);
 }
 
-function deleteImageFile(form){
+function deleteDocumentFile(form){
     form.addEventListener("submit", e => {
         e.preventDefault();
-        if(window.confirm("Esta seguro de eliminar esta imagen?")){
+        if(window.confirm("Esta seguro de eliminar este documento?")){
             e.target.submit();
         }
     })

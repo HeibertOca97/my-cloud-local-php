@@ -5,7 +5,7 @@ class HelpView extends HelpRoute{
     private $path;
 
     public function assets($dir){
-        $strPathUrl = URL . "resources/" . $dir; 
+        $strPathUrl = URL . "public/" . $dir; 
         print $strPathUrl;
     }
 
@@ -14,17 +14,22 @@ class HelpView extends HelpRoute{
         print $strPathUrl;
     }
 
+    public function url($dir){
+        $strPathUrl = URL . $dir; 
+        return $strPathUrl;
+    }
+
     public function storage($dir){
         $strPathUrl = URL . $dir; 
         print $strPathUrl;
     }
     
-    public function content($dir){
+    protected function content($dir){
         $strPathUrl = PATH . "resources/" . $dir . ".php"; 
-        require $strPathUrl;
+        return $strPathUrl;
     }
     
-    public function strReplace($str){
+    protected function strReplace($str){
         $strRoute =  str_replace('.', '/', $str);
         return $strRoute;
     }
@@ -33,17 +38,17 @@ class HelpView extends HelpRoute{
         print $value;
     }
 
-    public function json($array){
+    protected function json($array){
         return json_decode(json_encode($array));
     }
 
     // METHOD FILE
-    public function setStorage($directory = null, $filename){
-        $this->path = "resources/storage/" . $directory;
+    protected function setStorage($directory = null, $filename){
+        $this->path = "public/storage/" . $directory;
         return $this->path . "/" . $filename;
     }
 
-    public function uploadFile($tmp_name, $route_file){
+    protected function uploadFile($tmp_name, $route_file){
         if (!file_exists($this->path)) {
             mkdir($this->path, 0777, true);
         }
@@ -51,13 +56,8 @@ class HelpView extends HelpRoute{
         move_uploaded_file($tmp_name, $route_file);
     }
 
-    public function deleteFile($path){
+    protected function deleteFile($path){
         unlink($path);
     }
-
-    public function request($route){
-        
-    }
-
     
 }

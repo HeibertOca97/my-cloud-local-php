@@ -21,7 +21,7 @@
         </div>
 
         <div class="box-picture">
-            <h3><i class="far fa-folder-open"></i> Mis imagenes </h3>
+            <h3><i class="fas fa-image"></i> Mis imagenes </h3>
             <div class="box-list-file">
                 <?php if (count($images) > 0) : ?>
                     <?php foreach ($images as $item) : ?>

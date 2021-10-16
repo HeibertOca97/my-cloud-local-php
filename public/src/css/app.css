@@ -151,18 +151,18 @@ section, footer {
     font-weight: 900;
 }
 
-.box-img, .box-video {
+.box-img, .box-video, .box-doc {
     width: 95%;
     max-width: 250px;
     margin: 25px auto;
 }
 
-.box-img p, .box-video p {
+.box-img p, .box-video p, .box-doc p {
     margin: 10px auto;
     overflow: hidden;
 }
 
-.box-img>img, .box-video>video {
+.box-img>img, .box-video>video, .box-doc>iframe {
     display: block;
     width: 98%;
     margin: auto;
@@ -215,6 +215,14 @@ section, footer {
     height: 100%;
     display: block;
     transition: all 200ms;
+}
+
+.box-picture .doc-file{
+    text-align: center;
+    font-size: 100px;
+    display: block;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .box-picture picture:hover>.control-img, .box-picture picture:hover>.control-video {

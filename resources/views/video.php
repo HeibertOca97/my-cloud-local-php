@@ -23,7 +23,7 @@
         </div>
 
         <div class="box-picture">
-            <h3><i class="far fa-folder-open"></i> Mis videos</h3>
+            <h3><i class="fas fa-film"></i> Mis videos</h3>
             <div class="box-list-file">
                 <?php if (count($videos) > 0) : ?>
                     <?php foreach ($videos as $item) : ?>
@@ -32,7 +32,6 @@
                                 <source src="<?php $this->storage($item->url); ?>">
                             </video>
                             <div class="control-video">
-                                <!-- <a href="<?php $this->storage($item->url); ?>" download class="btn-control"><i class="fas fa-cloud-download-alt"></i></a> -->
                                 <form action="<?php $this->route("video/destroy/$item->id"); ?>" method="POST" class="delete-video">
                                     <button class="btn-control"><i class="fas fa-trash-alt"></i></button>
                                 </form>
